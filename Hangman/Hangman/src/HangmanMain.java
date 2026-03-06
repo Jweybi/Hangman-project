@@ -1,4 +1,5 @@
-/*Para lang sa pang run toh mga pre sa kabila yung game logic*/
+/*Dito pre ginawa ko toh para dito natin ilalagay final code natin bale code muna
+kayo sa vscode bago nyo ilapag dito para ma run nyo wala kaseng run dito*/
 
 public class Main {
     public static void main(String[] args) throws Exception {
@@ -8,4 +9,5 @@ public class Main {
         game.Startgame();
     }
 }
+
 
