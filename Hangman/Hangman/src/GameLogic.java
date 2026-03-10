@@ -1,92 +1,109 @@
+//Imports random class para makapag pick ng word yung program
 import java.util.Random;
+//Scanner class para makapag input si user
 import java.util.Scanner;
 
-
+//Main class containing the game logic
 public class GameLogic {
-    
- 
+
+//Arrays na nag sstore ng words para sa categories:
 private String[] foods = {"icecream", "fries", "hamburger", "spaghetti", "carbonara"};
 private String[] programming = {"java", "netbeans", "inheritance", "interface", "debugging"};
 private String[] animals = {"giraffe", "fish", "dog", "zebra", "capybara"};
-    
-    private String secretWord;
-    
+
+   //Ito yung mag sstore sa word na randomly chosen
+   private String secretWord;
+
+    //Ito yung array na mag sstore ng letter ng ginuess ni user
     private char[] guessedWord;
     
+    //Ito yung number of attempts si user para mahulaan yung word
     private int attempts = 6;
     
+    // Scanner object para mabasa yung input ni user
     private Scanner scanner = new Scanner(System.in);
 
-
+    // Constructer para sa "GameLogic" class
     public GameLogic() {
     {
-        
+        //Empty sya pero pwede gamitin kung kailangan
         }
     }
 
+    //Ito yung method na nag aallow pumili si user ng category
     private void chooseCategory() {
 
+        //Ito yung mag didisplay kay user which is yung options
         System.out.println("Choose a Category:");
         System.out.println("1. Foods");
         System.out.println("2. Programming");
         System.out.println("3. Animals");
         System.out.println("Enter category: ");
 
+        //Binabasa yung napili ni user na category
         int choice = scanner.nextInt();
         scanner.nextLine();
 
+        //Nag crecreate ng random object para maka select ng random na word
         Random random = new Random();
 
-        switch(choice) {
-            case 1:
+        
+        switch(choice) { //switch statement para ma deterrmine kung anong category ang napili ni user
+            case 1: //Pumipili ng random word sa food array
                 secretWord = foods[random.nextInt(foods.length)];
                 break;
 
-            case 2:
+            case 2://Pumipili ng random word sa programming arrray
                 secretWord = programming[random.nextInt(programming.length)];
                 break;
-
-            case 3:
+                
+                
+            case 3://Pumipili ng random word dun sa animals array
                 secretWord = animals[random.nextInt(animals.length)];
                 break;
 
-            default:
-                System.out.println("Invalid choice.Defaulting to Foods.");
+            default://Pag invalid category matic mag dedefault sa foods
+                System.out.println("Invalid choice Foods Category is now chosen.");
                 secretWord = foods[random.nextInt(foods.length)];
         }
-            guessedWord = new char[secretWord.length()];
+            guessedWord = new char[secretWord.length()]; //Nag crecreate ng array na same length dun sa secret word
 
+            //Ito yung nag fifill in ng underscore dun sa guessedword array
             for (int i = 0; i < guessedWord.length; i++) {
                 guessedWord[i] = '_';
             }
     }
 
+    //Method pag nag start ang game
     public void startGame() {
         System.out.println("=== WELCOME TO THE HANGMAN GAME ===");
 
-        chooseCategory();
+        chooseCategory();//Ito yung nagcacall dun sa method sa taas para maka pili ng category or word
 
-        while (attempts > 0) {
+        while (attempts > 0) {//ito yung game loop na nag rurun habang may attempt pang natitira si user
 
-            displayWord();
-            drawHangman();
+            displayWord();//Dinidisplay yung current guessed word
+            drawHangman();//Ito yung nag dradraw dun sa hangman depende sa dami ng attempts na natitira ng user
 
+            //Pinapakita sa user kung ilan nalang meron syang attempts
             System.out.println("Attempts left: " + attempts);
             System.out.print("Enter a letter: ");
             
             try {
-                String input = scanner.nextLine();
+                String input = scanner.nextLine();//Ito yung nagbabasa dun sa user input
                
-                if(input.trim().isEmpty()) {
+                if(input.trim().isEmpty()) {//Ito yung nag checheck at nag rurun pag empty ang input ni user
                   throw new Exception("Input cannot be empty!!");
                 }
+
                 char guess = input.charAt(0);
 
-                if(!Character.isLetter(guess)) {
+                if(!Character.isLetter(guess)) {//Chinecheck netoh if letter ba ang input ni user
                     throw new Exception("Please enter a letter only.");
                 }  
-                processGuess(Character.toLowerCase(guess));
+                processGuess(Character.toLowerCase(guess));//prinoprocess yung guessed letter if capital gagawing lower
 
+                //Chinecheck if na guess na ba yung word    
                 if (isWordGuessed()) {
                     System.out.println("Congratulations!! You guessed the word: " + secretWord);
                     return;
@@ -188,6 +205,8 @@ private String[] animals = {"giraffe", "fish", "dog", "zebra", "capybara"};
         return true;
     }
 } 
+
+
 
 
 
