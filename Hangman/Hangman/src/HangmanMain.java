@@ -1,3 +1,4 @@
+//Main class pang run ng game
 public class HangmanMain {
     public static void main(String[] args) throws Exception {
 
@@ -6,4 +7,3 @@ public class HangmanMain {
         game.startGame();
     }
 }
-
