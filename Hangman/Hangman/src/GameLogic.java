@@ -1,34 +1,71 @@
 import java.util.Random;
 import java.util.Scanner;
 
-//Game logic ng game
+
 public class GameLogic {
     
-    //possible of chosen words:
-    private String[] words = {"netbeans", "java", "inheritance", "subclass", "mainclass"};
-
-    //Ito yung napili ng random word which is yung secret word
+ 
+private String[] foods = {"icecream", "fries", "hamburger", "spaghetti", "carbonara"};
+private String[] programming = {"java", "netbeans", "inheritance", "interface", "debugging"};
+private String[] animals = {"giraffe", "fish", "dog", "zebra", "capybara"};
+    
     private String secretWord;
-    //array para sa pag display ng letter
+    
     private char[] guessedWord;
-    //Number ng kung ilang attempts allowed(kahit ilan yan btw)
+    
     private int attempts = 6;
     
     private Scanner scanner = new Scanner(System.in);
 
-    //Constructor ito yung nag seselect ng random word
+
     public GameLogic() {
-        Random random = new Random(); 
-        secretWord = words[random.nextInt(words.length)];
-        guessedWord = new char[secretWord.length()];
-        for (int i = 0; i < guessedWord.length; i++) {
-            guessedWord[i] = '_';
+    {
+        
         }
     }
 
-    //Ito yung nag cocontrol ng main game loop
+    private void chooseCategory() {
+
+        System.out.println("Choose a Category:");
+        System.out.println("1. Foods");
+        System.out.println("2. Programming");
+        System.out.println("3. Animals");
+        System.out.println("Enter category: ");
+
+        int choice = scanner.nextInt();
+        scanner.nextLine();
+
+        Random random = new Random();
+
+        switch(choice) {
+            case 1:
+                secretWord = foods[random.nextInt(foods.length)];
+                break;
+
+            case 2:
+                secretWord = programming[random.nextInt(programming.length)];
+                break;
+
+            case 3:
+                secretWord = animals[random.nextInt(animals.length)];
+                break;
+
+            default:
+                System.out.println("Invalid choice.Defaulting to Foods.");
+                secretWord = foods[random.nextInt(foods.length)];
+        }
+            guessedWord = new char[secretWord.length()];
+
+            for (int i = 0; i < guessedWord.length; i++) {
+                guessedWord[i] = '_';
+            }
+    }
+
     public void startGame() {
         System.out.println("=== WELCOME TO THE HANGMAN GAME ===");
+
+        chooseCategory();
+
         while (attempts > 0) {
 
             displayWord();
@@ -39,13 +76,12 @@ public class GameLogic {
             
             try {
                 String input = scanner.nextLine();
-                //Exception handling yung pag empty letter ang input
+               
                 if(input.trim().isEmpty()) {
-                  throw new Exception("Input cannot be empty!!");//Ito yung lalabas pag empty ang input ng user
+                  throw new Exception("Input cannot be empty!!");
                 }
                 char guess = input.charAt(0);
 
-                //Exception handling pag hindi letter nilagay eg: Number
                 if(!Character.isLetter(guess)) {
                     throw new Exception("Please enter a letter only.");
                 }  
@@ -60,21 +96,20 @@ public class GameLogic {
             }
         }
 
-        //Game over condition
+  
         drawHangman();
         System.out.println("GAME OVER! The word was: " + secretWord);
     }
 
-    //Method na mag didisplay ng guessed word
-    private void displayWord() {
-        System.out.println("Word: ");
+    
+        private void displayWord() {
+        System.out.print("Word: ");
         for (char c : guessedWord) {
-            System.out.println(c + " ");
-        }
-        System.out.println();
+        System.out.print(c + " ");
+      }
+         System.out.println();
     }
-
-    //Method na nagchecheck if yung letter na na-guess ay nasa word
+    
     private void processGuess(char guess) {
          boolean correct = false;
 
@@ -86,14 +121,14 @@ public class GameLogic {
             }
          }
 
-         //Pag mali naman yung guess
+         
          if (!correct) {
             attempts--;
             System.out.println("You guessed the wrong word!");
          }
     }
     
-    //Method para sa hangman stickman
+    
     private void drawHangman() {
 
         System.out.println("  +----+");
@@ -142,7 +177,7 @@ public class GameLogic {
         System.out.println("========="); 
     }
 
-    //Ito yung method na mag checheck if nahulaan na yung buong word bale result or outcome
+    
     private boolean isWordGuessed() {
 
         for (char c : guessedWord) {
@@ -153,6 +188,7 @@ public class GameLogic {
         return true;
     }
 } 
+
 
 
 
