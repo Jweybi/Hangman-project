@@ -8,7 +8,7 @@ public class GameLogic {
 
 //Arrays na nag sstore ng words para sa categories:
 private String[] foods = {"icecream", "fries", "hamburger", "spaghetti", "carbonara"};
-private String[] programming = {"java", "netbeans", "inheritance", "interface", "debugging"};
+private String[] programming = {"java", "netbeans", "inheritance", "interface", "debugging", "","sql"};
 private String[] animals = {"giraffe", "fish", "dog", "zebra", "capybara"};
 
    //Ito yung mag sstore sa word na randomly chosen
@@ -89,6 +89,7 @@ private String[] animals = {"giraffe", "fish", "dog", "zebra", "capybara"};
             System.out.println("Attempts left: " + attempts);
             System.out.print("Enter a letter: ");
             
+            //Exception Handling
             try {
                 String input = scanner.nextLine();//Ito yung nagbabasa dun sa user input
                
@@ -108,49 +109,61 @@ private String[] animals = {"giraffe", "fish", "dog", "zebra", "capybara"};
                     System.out.println("Congratulations!! You guessed the word: " + secretWord);
                     return;
                 }
-            } catch (Exception e) {
+            } catch (Exception e) {//Ito yung mag hahandle ng mga invalid input errors
                 System.out.println("Invalid input: " + e.getMessage());
             }
         }
 
-  
+        //Ito yung mag rurun kapag naubos na yung input or attempts ni user
         drawHangman();
         System.out.println("GAME OVER! The word was: " + secretWord);
     }
 
-    
-        private void displayWord() {
-        System.out.print("Word: ");
-        for (char c : guessedWord) {
-        System.out.print(c + " ");
+    //Ito yung method para ipakita yung progress ng word
+    //Halimbawa: _ _ a _ _ a
+    private void displayWord() {
+    System.out.print("Word: ");
+
+    //Enhance for loop para i print bawat character sa guessedWord array
+     for (char c : guessedWord) {
+    System.out.print(c + " ");
       }
-         System.out.println();
+
+         System.out.println();//Mag new line pagkatapos i display yung word
     }
     
+    //Method na nag pprocess kung tama ba o mali yung guess ni user
     private void processGuess(char guess) {
+
+        //Boolean variable para malaman kung may natamaan bang letter
          boolean correct = false;
 
+         //Loop para i check bawat letter ng secret word
          for (int i = 0; i < secretWord.length(); i++) {
 
+            //Ilalagay yung tamang letter sa guessedWord array
             if (secretWord.charAt(i) == guess) {
                 guessedWord[i] = guess;
+
+                //Pag dito binato ibig sabihin tama yung guess
                 correct = true;
             }
          }
 
-         
+         //Kung walang natamaan na letter
          if (!correct) {
-            attempts--;
-            System.out.println("You guessed the wrong word!");
+            attempts--;//Mangyayari jan babawasan ang attempts
+            System.out.println("You guessed the wrong letter!");//Magpapakita pag maling letter
          }
     }
     
-    
+    //Method na mag dradraw sa hangman bawat maling guess ni user at depende sa attempts na natitira
     private void drawHangman() {
 
         System.out.println("  +----+");
         System.out.println("  |    |");
 
+        //Switch statements para mag display ng iba't ibang parts ng hangman
         switch (attempts) {
             
             case 6:
@@ -194,17 +207,20 @@ private String[] animals = {"giraffe", "fish", "dog", "zebra", "capybara"};
         System.out.println("========="); 
     }
 
-    
+    //Method para i check kung lahat ng letters ay nahulaan na
     private boolean isWordGuessed() {
 
-        for (char c : guessedWord) {
-            if (c == '_') {
+        for (char c : guessedWord) {//Loop para i check kung may underscore pa
+
+            if (c == '_') {//Kapag may underscore pa ibig sabihin may letters pang hindi nahuhulaan
                 return false;
             }
         }
+        //Kapag wala nang underscore ibig sabihin nahulaan na ang buong word
         return true;
     }
 } 
+
 
 
 
